@@ -1,0 +1,4 @@
+<!DOCTYPE message [
+        <!ELEMENT message (menu)>
+        <!ELEMENT menu (#PCDATA)>
+        ]>

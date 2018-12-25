@@ -1,0 +1,5 @@
+<!DOCTYPE message [
+        <!ELEMENT message (addressData,dishData)>
+        <!ELEMENT addressData (#PCDATA)>
+        <!ELEMENT dishData (#PCDATA)>
+        ]>
