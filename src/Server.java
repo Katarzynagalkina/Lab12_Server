@@ -14,6 +14,9 @@ public class Server {
                 Socket client = server.accept();
                 new Thread(()->{
                     try {
+                        DataOutputStream out = new DataOutputStream(client.getOutputStream());
+                        DataInputStream in = new DataInputStream(client.getInputStream());
+
                         String menu="Our menu:\n" +
                                     "\t\t1.Beef steak\n\t" +
                                     "\t2.Pancake\n" +
@@ -24,10 +27,18 @@ public class Server {
                                     "\t\t7.Beetroot salad\n" +
                                     "\t\t8.Hamburger\n";
 
-                        Connector.createXML("toClient1.xml", menu);
+                        Connector.createXML( "C:\\Users\\Katty\\Desktop\\message.xml", menu);
+                        out.writeBoolean(true);
+
                         System.out.println("Delivery info: ");
-                        String order= Connector.readXML("fromClient.xml");
-                        Connector.createXML("toClient2.xml",order);
+                        boolean isWritten=in.readBoolean();
+                        String order="null";
+                        if(isWritten) {
+                            order = Connector.readXML("C:\\Users\\Katty\\Desktop\\message.xml");
+                        }
+                        Connector.createXML("C:\\Users\\Katty\\Desktop\\message.xml",order);
+                        out.writeBoolean(true);
+
                     } catch (IOException | ParserConfigurationException | TransformerException | SAXException e) {
                         e.printStackTrace();
                     }

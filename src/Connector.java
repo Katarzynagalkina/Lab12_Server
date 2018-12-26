@@ -22,8 +22,6 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 
-import static javax.xml.transform.OutputKeys.*;
-
 
 
 public class Connector {
@@ -31,6 +29,10 @@ public class Connector {
 
     static void createXML(String XMLFileName, String menu)  throws ParserConfigurationException, IOException, SAXException, TransformerException
     {
+        File myFile = new File("C:\\Users\\Katty\\Desktop\\message.xml");
+        if(myFile.exists())
+            myFile.delete();
+
         DocumentBuilderFactory factory=DocumentBuilderFactory.newInstance();
         DocumentBuilder builder= factory.newDocumentBuilder();
         Document document= builder.newDocument();
@@ -45,16 +47,6 @@ public class Connector {
         Transformer t= TransformerFactory.newInstance().newTransformer();
         t.setOutputProperty(OutputKeys.INDENT, "yes");
         t.transform(new DOMSource(document),new StreamResult(new FileOutputStream(XMLFileName)));
-
-//в строку
-
-//        DOMImplementation implementation=document.getImplementation();
-//        DOMImplementationLS implementationLS=(DOMImplementationLS) implementation.getFeature("LS","3.0");
-//        LSSerializer ser=implementationLS.createLSSerializer();
-//        ser.getDomConfig().setParameter("format-pretty-print", true);
-//        String str=ser.writeToString(document);
-
-
     }
 
 
@@ -85,7 +77,6 @@ public class Connector {
 
         for(int i=0;i<nodelist.getLength();i++) {
             if (nodelist.item(i) instanceof Element) {
-              //  System.out.println(((Element) nodelist.item(i)).getTagName()); //выводятся имена тегов
                 if(((Element) nodelist.item(i)).hasAttribute("address"))
                     System.out.println( "Client address : " + ((Element) nodelist.item(i)).getAttribute("address"));
                 if(((Element) nodelist.item(i)).hasAttribute("number")) {
